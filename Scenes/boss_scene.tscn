@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://co2drr4rflwl4"]
+
+[ext_resource type="Script" path="res://Scenes/background.gd" id="1_cyvxj"]
+[ext_resource type="Texture2D" uid="uid://dm3dr15gt8qhy" path="res://Assets/Skybox Pyramid outside.png" id="2_x5yxa"]
+[ext_resource type="PackedScene" uid="uid://423mngxux0wa" path="res://Scenes/player.tscn" id="3_31fdo"]
+[ext_resource type="PackedScene" uid="uid://dxghtprti55a3" path="res://Scenes/Boss.tscn" id="4_dfu32"]
+[ext_resource type="Script" path="res://Scenes/end_of_level.gd" id="5_wk34d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tu7io"]
+size = Vector2(72, 354)
+
+[node name="World" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+script = ExtResource("1_cyvxj")
+
+[node name="TextureRect" type="TextureRect" parent="Background"]
+offset_right = 17533.0
+offset_bottom = 240.0
+scale = Vector2(1.345, 1.345)
+texture = ExtResource("2_x5yxa")
+stretch_mode = 1
+
+[node name="Player" parent="." instance=ExtResource("3_31fdo")]
+position = Vector2(62, 156)
+speed = 300
+
+[node name="VladBoss" parent="." instance=ExtResource("4_dfu32")]
+position = Vector2(694, 171)
+
+[node name="EndOfLevel3" type="Area2D" parent="."]
+position = Vector2(22078, -4)
+script = ExtResource("5_wk34d")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EndOfLevel3"]
+position = Vector2(26, 167)
+shape = SubResource("RectangleShape2D_tu7io")
+
+[connection signal="body_entered" from="EndOfLevel3" to="Background" method="_on_end_of_level_3_body_entered"]
